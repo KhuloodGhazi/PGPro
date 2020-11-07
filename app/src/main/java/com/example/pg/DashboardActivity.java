@@ -18,10 +18,6 @@ public class DashboardActivity extends AppCompatActivity {
 
     ActionBar actionBar;
 
-
-
-
-
     private BottomNavigationView navigationView;
 
     @Override
@@ -83,14 +79,28 @@ public class DashboardActivity extends AppCompatActivity {
                             ft3.replace(R.id.content, fragment3, "");
                             ft3.commit();
                             return true;
-                        case R.id.nav_Message:
+
+
+                        case R.id.nav_event:
                             //users fragment transaction
-                            actionBar.setTitle("Message");//change actionbar title
-                            MessageFragment fragment4 = new MessageFragment();
+                            actionBar.setTitle("Event");//change actionbar title
+                            EventFragment fragment4 = new EventFragment();
                             FragmentTransaction ft4 = getSupportFragmentManager().beginTransaction();
                             ft4.replace(R.id.content, fragment4, "");
                             ft4.commit();
                             return true;
+
+                        case R.id.nav_Message:
+                            //users fragment transaction
+                            actionBar.setTitle("Message");//change actionbar title
+                            MessageFragment fragment5 = new MessageFragment();
+                            FragmentTransaction ft5 = getSupportFragmentManager().beginTransaction();
+                            ft5.replace(R.id.content, fragment5, "");
+                            ft5.commit();
+                            return true;
+
+
+
 
                     }
 

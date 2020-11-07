@@ -120,6 +120,7 @@ public class RegisterSpecialListActivity extends AppCompatActivity {
                             hashMap.put("name" , name );
                             hashMap.put("userName" , userName);
                             hashMap.put("specialistaion" , specialistaion);
+                            hashMap.put("usertype", "spec");
 
 
                             //intilizing firebase database

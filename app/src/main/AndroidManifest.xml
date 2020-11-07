@@ -16,7 +16,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HealthPage"></activity>
+        <activity android:name=".user.EventUserActivity"></activity>
+        <activity android:name=".speciality.EventActivity" />
+        <activity android:name=".Event_date_time" />
+        <activity android:name=".user.FamilyUser" />
+        <activity android:name=".speciality.FamilyActivity" />
+        <activity android:name=".user.HealthUser" />
+        <activity android:name=".speciality.HealthActivity" />
         <activity
             android:name=".RegisterSpecialListActivity"
             android:parentActivityName=".Register" />

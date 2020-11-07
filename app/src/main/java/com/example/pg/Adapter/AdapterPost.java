@@ -2,13 +2,10 @@ package com.example.pg.Adapter;
 
 
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -41,7 +38,7 @@ import com.bumptech.glide.request.target.Target;
 
 import com.example.pg.AddPostActivity;
 import com.example.pg.ImageDetailActivity;
-import com.example.pg.Model.ModelPost;
+import com.example.pg.model.ModelPost;
 import com.example.pg.PostDetailActivity;
 import com.example.pg.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -60,7 +57,6 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 

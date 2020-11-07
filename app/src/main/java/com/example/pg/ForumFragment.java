@@ -1,105 +1,101 @@
 package com.example.pg;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.example.pg.speciality.FamilyActivity;
+import com.example.pg.speciality.HealthActivity;
+import com.example.pg.user.FamilyUser;
+import com.example.pg.user.HealthUser;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GetTokenResult;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ForumFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class ForumFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    public String user_type = "";
 
     public ForumFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ForumFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ForumFragment newInstance(String param1, String param2) {
-        ForumFragment fragment = new ForumFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-
-    RecyclerView recyclerView;
-    List<Model> itemList;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view=inflater.inflate(R.layout.fragment_forum, container, false);
+        View view =inflater.inflate(R.layout.fragment_forum, container, false);
 
-        recyclerView=view.findViewById(R.id.recycler);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        
-        //initData();
-
-        recyclerView.setAdapter(new ItemAdapter(initData(),getApplicationContext()));
-
+        LinearLayout health = view.findViewById(R.id.health_section);
+        LinearLayout family = view.findViewById(R.id.family_section);
+        LinearLayout growth = view.findViewById(R.id.growth_section);
+        LinearLayout relation = view.findViewById(R.id.relationship_section);
+        LinearLayout finance = view.findViewById(R.id.finance_section);
+        LinearLayout religious = view.findViewById(R.id.relationship_section);
 
 
+        String user = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        // Get a reference to our posts
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference().child("Users").child("/" + user);
+
+        // Attach a listener to read the data at our posts reference
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                user_type = dataSnapshot.child("usertype").getValue().toString();
+                Log.d("TAG", "onDataChange: " + user_type);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+
+        health.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(user_type.equals("spec")) {
+                    startActivity(new Intent(getActivity(), HealthActivity.class));
+                }
+                if(user_type.equals("user")) {
+                    startActivity(new Intent(getActivity(), HealthUser.class));
+                }
+            }
+        });
+
+        family.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(user_type.equals("spec")) {
+                    startActivity(new Intent(getActivity(), FamilyActivity.class));
+                }
+                if(user_type.equals("user")) {
+                    startActivity(new Intent(getActivity(), FamilyUser.class));
+                }
+            }
+        });
 
         return view;
     }
-
-    private Object getApplicationContext() {
-    }
-
-    private List<Model> initData() {
-
-        itemList=new ArrayList<>();
-        itemList.add(new Model(R.drawable.familyforum,"Health"));
-        itemList.add(new Model(R.drawable.familyforum,"Family"));
-        itemList.add(new Model(R.drawable.familyforum,"Growth"));
-        itemList.add(new Model(R.drawable.familyforum,"Relationships"));
-        itemList.add(new Model(R.drawable.familyforum,"Finance and Career"));
-        itemList.add(new Model(R.drawable.familyforum,"Religious"));
-
-
-        return itemList;
-    }
-
 
 }

@@ -118,6 +118,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                             hashMap.put("uid" , uid);
                             hashMap.put("name" , name );
                             hashMap.put("userName" , userName);
+                            hashMap.put("usertype", "user");
 
 
                             //intilizing firebase database
